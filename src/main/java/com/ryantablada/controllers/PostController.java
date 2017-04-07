@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.ryantablada.entities.HasId;
 import com.ryantablada.entities.Post;
+import com.ryantablada.parsers.RootParser;
 import com.ryantablada.serializers.PostSerializer;
 import com.ryantablada.serializers.RootSerializer;
 
@@ -46,5 +47,21 @@ public class PostController {
     post.setContent("Lorem lorem lorem");
 
     return rootSerializer.serializeOne("/posts/1", post, postSerializer);
+  }
+
+  @RequestMapping(path = "/posts", method = RequestMethod.POST)
+  public Map<String, Object> storePost(@RequestBody RootParser<Post> parser) {
+    RootSerializer rootSerializer = new RootSerializer();
+    PostSerializer postSerializer = new PostSerializer();
+    Post post = parser.getData().getEntity();
+
+    Integer id = Integer.parseInt(parser.getData().getId());
+
+    post.setId(id);
+
+    return rootSerializer.serializeOne(
+      "/posts/" + (String) post.getId().toString(),
+      post,
+      postSerializer);
   }
 }
