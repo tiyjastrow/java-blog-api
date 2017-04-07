@@ -32,7 +32,7 @@ public class RootSerializer {
     return result;
   }
 
-  public HashMap<String, Object> serializeMany(String resourceUrl, Iterable<?> data, JsonDataSerializer serializer) {
+  public HashMap<String, Object> serializeMany(String resourceUrl, Iterable data, JsonDataSerializer serializer) {
     Iterable<HasId> results = (Iterable<HasId>) data;
     List<HasId> resultsList = new ArrayList<>();
 
