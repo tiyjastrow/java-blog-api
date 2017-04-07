@@ -5,14 +5,9 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name = "posts")
 public class Post implements HasId {
   private static final long serialVersionUID = 1L;
-
-  @Column
-  String title;
-
-  @Column(columnDefinition = "text")
-  String content;
 
   @Id
   @GeneratedValue(generator="system-uuid")
@@ -25,6 +20,26 @@ public class Post implements HasId {
 
   public void setId(String val) {
     this.id = val;
+  }
+
+  @Column
+  String title;
+
+  @Column(columnDefinition = "text")
+  String content;
+
+  @ManyToOne
+  User user;
+
+  public void setUser(User u) {
+    this.user = u;
+  }
+
+  public void setUser(String id) {
+    User user = new User();
+    user.setId(id);
+
+    this.setUser(user);
   }
 
   public String getTitle() {
