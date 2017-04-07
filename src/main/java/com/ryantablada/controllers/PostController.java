@@ -1,48 +1,45 @@
 package com.ryantablada.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.ryantablada.entities.HasId;
 import com.ryantablada.entities.Post;
 import com.ryantablada.parsers.RootParser;
+import com.ryantablada.repositories.PostRepository;
 import com.ryantablada.serializers.PostSerializer;
 import com.ryantablada.serializers.RootSerializer;
 
 @RestController
 public class PostController {
+
+  RootSerializer rootSerializer;
+  PostSerializer postSerializer;
+
+  public PostController() {
+    rootSerializer = new RootSerializer();
+    postSerializer = new PostSerializer();
+  }
+
+  @Autowired
+  PostRepository posts;
+
   @RequestMapping(path = "/posts", method = RequestMethod.GET)
   public Map<String, Object> findAllPost() {
-    RootSerializer rootSerializer = new RootSerializer();
-    PostSerializer postSerializer = new PostSerializer();
+    Iterable<Post> results = posts.findAll();
 
-    Post post = new Post();
-    post.setId(2);
-    post.setTitle("This is my first Post");
-    post.setContent("Lorem lorem lorem");
-
-    Post post2 = new Post();
-    post2.setId(15);
-    post2.setTitle("This is my second Post");
-    post2.setContent("More text goes here");
-
-    List<HasId> posts = new ArrayList<>();
-    posts.add(post);
-    posts.add(post2);
-
-    return rootSerializer.serializeMany("/posts", posts, postSerializer);
+    return rootSerializer.serializeMany("/posts", results, postSerializer);
   }
 
   @RequestMapping(path = "/posts/1", method = RequestMethod.GET)
   public Map<String, Object> findOnePost() {
-    RootSerializer rootSerializer = new RootSerializer();
-    PostSerializer postSerializer = new PostSerializer();
-
     Post post = new Post();
-    post.setId(2);
+    post.setId("2");
     post.setTitle("This is my first Post");
     post.setContent("Lorem lorem lorem");
 
@@ -51,16 +48,12 @@ public class PostController {
 
   @RequestMapping(path = "/posts", method = RequestMethod.POST)
   public Map<String, Object> storePost(@RequestBody RootParser<Post> parser) {
-    RootSerializer rootSerializer = new RootSerializer();
-    PostSerializer postSerializer = new PostSerializer();
     Post post = parser.getData().getEntity();
 
-    Integer id = Integer.parseInt(parser.getData().getId());
-
-    post.setId(id);
+    posts.save(post);
 
     return rootSerializer.serializeOne(
-      "/posts/" + (String) post.getId().toString(),
+      "/posts/" + post.getId(),
       post,
       postSerializer);
   }

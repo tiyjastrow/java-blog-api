@@ -1,15 +1,29 @@
 package com.ryantablada.entities;
 
+import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
 public class Post implements HasId {
+  private static final long serialVersionUID = 1L;
+
+  @Column
   String title;
+
+  @Column(columnDefinition = "text")
   String content;
-  Integer id;
+
+  @Id
+  @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid", strategy = "uuid")
+  String id;
 
   public String getId() {
-    return this.id.toString();
+    return id;
   }
 
-  public void setId(Integer val) {
+  public void setId(String val) {
     this.id = val;
   }
 

@@ -1,5 +1,6 @@
 package com.ryantablada.serializers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,5 +30,14 @@ public class RootSerializer {
     result.put("data", data.stream().map((e) -> serializer.serialize(e)).collect(Collectors.toList()));
 
     return result;
+  }
+
+  public HashMap<String, Object> serializeMany(String resourceUrl, Iterable<?> data, JsonDataSerializer serializer) {
+    Iterable<HasId> results = (Iterable<HasId>) data;
+    List<HasId> resultsList = new ArrayList<>();
+
+    results.iterator().forEachRemaining(resultsList::add);
+
+    return this.serializeMany(resourceUrl, resultsList, serializer);
   }
 }
