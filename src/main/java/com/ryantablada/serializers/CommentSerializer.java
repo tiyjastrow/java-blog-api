@@ -22,6 +22,8 @@ public class CommentSerializer extends JsonDataSerializer {
   }
 
   public Map<String, String> getRelationshipUrls() {
-    return new HashMap<String, String>();
+    return new HashMap<String, String>() {{
+        put("post", "/comments/{id}/post");
+    }};
   }
 }

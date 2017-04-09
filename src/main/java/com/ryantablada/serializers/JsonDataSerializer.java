@@ -22,7 +22,7 @@ public abstract class JsonDataSerializer {
                             Map<String, Object> links = new HashMap<>();
                             String url = entry.getValue();
 
-                            links.put("related", url.replace(":id", id));
+                            links.put("related", url.replace("{id}", id));
 
                             result.put("links", links);
 
@@ -36,7 +36,7 @@ public abstract class JsonDataSerializer {
         result.put("type", this.getType());
         result.put("id", data.getId());
         result.put("attributes", this.getAttributes(data));
-        // result.put("relationships", this.getRelationships(data.getId()));
+        result.put("relationships", this.getRelationships(data.getId()));
 
         return result;
     }
