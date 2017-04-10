@@ -9,6 +9,7 @@ import com.ryantablada.repositories.CommentRepository;
 import com.ryantablada.serializers.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CommentPostController {
   @Autowired
   CommentRepository comments;

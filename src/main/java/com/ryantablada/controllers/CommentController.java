@@ -15,6 +15,7 @@ import com.ryantablada.serializers.CommentSerializer;
 import com.ryantablada.serializers.RootSerializer;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CommentController {
   
   @Autowired
