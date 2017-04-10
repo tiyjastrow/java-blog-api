@@ -1,5 +1,7 @@
 package com.ryantablada.entities;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -18,6 +20,9 @@ public class Post implements HasId {
   @GeneratedValue(generator="system-uuid")
   @GenericGenerator(name="system-uuid", strategy = "uuid")
   String id;
+
+  @OneToMany(mappedBy = "post")
+  Set<Comment> comments;
 
   public String getId() {
     return id;
@@ -41,5 +46,9 @@ public class Post implements HasId {
 
   public void setContent(String val) {
     this.content = val;
+  }
+
+  public Set<Comment> getComments() {
+    return this.comments;
   }
 }
