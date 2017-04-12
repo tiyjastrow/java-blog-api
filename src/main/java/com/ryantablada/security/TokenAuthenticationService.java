@@ -1,5 +1,6 @@
 package com.ryantablada.security;
 
+import java.util.HashMap;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-import java.util.HashMap;
+import static java.util.Collections.emptyList;
 
 class TokenAuthenticationService {
   static final long EXPIRATIONTIME = 864_000_000; // 10 days
@@ -19,23 +20,13 @@ class TokenAuthenticationService {
   static final String TOKEN_PREFIX = "Bearer";
   static final String HEADER_STRING = "Authorization";
 
-  static void addAuthentication(HttpServletResponse res, String username) {
+  static String addAuthentication(HttpServletResponse res, String username) {
     String JWT = Jwts.builder().setSubject(username)
         .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME)).signWith(SignatureAlgorithm.HS512, SECRET)
         .compact();
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
 
-    res.setContentType("application/json");
-
-    HashMap<String, String> result = new HashMap<String, String>() {
-      {
-        put("token", JWT);
-      }
-    };
-
-    ObjectMapper mapper = new ObjectMapper();
-
-    mapper.writeValue(res.getWriter(), result);
+    return JWT;
   }
 
   static Authentication getAuthentication(HttpServletRequest request) {

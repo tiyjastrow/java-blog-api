@@ -34,6 +34,18 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
   @Override
   protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
       Authentication auth) throws IOException, ServletException {
-    TokenAuthenticationService.addAuthentication(res, auth.getName());
+    String JWT = TokenAuthenticationService.addAuthentication(res, auth.getName());
+
+    res.setContentType("application/json");
+
+    HashMap<String, String> result = new HashMap<String, String>() {{
+      {
+        put("token", JWT);
+      }
+    }};
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    mapper.writeValue(res.getWriter(), result);
   }
 }
