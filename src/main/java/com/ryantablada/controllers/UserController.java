@@ -58,8 +58,10 @@ public class UserController {
 
   @RequestMapping(path = "/users/current", method = RequestMethod.GET)
   public Map<String, Object> currentUser() {
+    // Get the Spring Authentication object from the JWT token
     Authentication u = SecurityContextHolder.getContext().getAuthentication();
 
+    // Find the logged in user from the database
     User user = users.findByUsername(u.getName());
 
 
@@ -73,6 +75,7 @@ public class UserController {
   public Map<String, Object> storeUser(@RequestBody RootParser<User> parser) {
     User user = parser.getData().getEntity();
 
+    // Encrypt Password
     user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
     users.save(user);
 
