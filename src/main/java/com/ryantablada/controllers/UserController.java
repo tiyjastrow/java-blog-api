@@ -1,6 +1,8 @@
 package com.ryantablada.controllers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +54,19 @@ public class UserController {
     users.delete(id);
 
     response.setStatus(204);
+  }
+
+  @RequestMapping(path = "/users/current", method = RequestMethod.GET)
+  public Map<String, Object> currentUser() {
+    Authentication u = SecurityContextHolder.getContext().getAuthentication();
+
+    User user = users.findByUsername(u.getName());
+
+
+    return rootSerializer.serializeOne(
+      "/users/" + user.getId(),
+      user,
+      userSerializer);
   }
 
   @RequestMapping(path = "/users", method = RequestMethod.POST)
