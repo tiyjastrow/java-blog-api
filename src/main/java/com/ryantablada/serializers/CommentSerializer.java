@@ -1,22 +1,21 @@
-package com.theironyard.serializers;
+package com.ryantablada.serializers;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.theironyard.entities.HasId;
-import com.theironyard.entities.Post;
+import com.ryantablada.entities.HasId;
+import com.ryantablada.entities.Comment;
 
-public class PostSerializer extends JsonDataSerializer {
+public class CommentSerializer extends JsonDataSerializer {
   
   public String getType() {
-    return "posts";
+    return "comments";
   }
 
   public Map<String, Object> getAttributes(HasId entity) {
     Map<String, Object> result = new HashMap<>();
-    Post post = (Post) entity;
+    Comment post = (Comment) entity;
 
-    result.put("title", post.getTitle());
     result.put("content", post.getContent());
 
     return result;
@@ -24,7 +23,7 @@ public class PostSerializer extends JsonDataSerializer {
 
   public Map<String, String> getRelationshipUrls() {
     return new HashMap<String, String>() {{
-        put("comments", "/posts/{id}/comments");
+        put("post", "/comments/{id}/post");
     }};
   }
 }
