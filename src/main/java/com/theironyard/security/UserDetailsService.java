@@ -1,7 +1,7 @@
 package com.theironyard.security;
 
-import com.ryantablada.entities.User;
-import com.ryantablada.repositories.UserRepository;
+import com.theironyard.entities.User;
+import com.theironyard.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
