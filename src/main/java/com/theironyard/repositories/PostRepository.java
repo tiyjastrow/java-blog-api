@@ -1,9 +1,7 @@
-package com.ryantablada.repositories;
+package com.theironyard.repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import com.ryantablada.entities.Post;
-
-import java.util.UUID;
+import com.theironyard.entities.Post;
 
 public interface PostRepository extends CrudRepository<Post, String> {
 

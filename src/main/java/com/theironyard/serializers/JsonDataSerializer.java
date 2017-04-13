@@ -1,9 +1,9 @@
-package com.ryantablada.serializers;
+package com.theironyard.serializers;
 
 import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.Collectors;
-import com.ryantablada.entities.HasId;
+import com.theironyard.entities.HasId;
 
 
 public abstract class JsonDataSerializer {

@@ -1,13 +1,15 @@
-package com.ryantablada.entities;
+package com.theironyard.entities;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "posts")
 public class Post implements HasId {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;    // Note; implementing Serializable correctly is not trivial.
+                                                      // See = http://www.javapractices.com/topic/TopicAction.do?Id=45
 
   @Id
   @GeneratedValue(generator="system-uuid")
@@ -30,6 +32,12 @@ public class Post implements HasId {
 
   @ManyToOne
   User user;
+
+  @Transient            // not meant to be persisted
+  @JsonIgnore           // not meant to be shared with Client
+  String someJunkData;
+
+  // use  @Transient  when the field is not to be persisted
 
   public void setUser(User u) {
     this.user = u;

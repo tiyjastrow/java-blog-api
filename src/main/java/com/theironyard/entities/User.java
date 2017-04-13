@@ -1,4 +1,4 @@
-package com.ryantablada.entities;
+package com.theironyard.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User implements HasId {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator="system-uuid")

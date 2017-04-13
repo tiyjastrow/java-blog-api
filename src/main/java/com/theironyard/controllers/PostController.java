@@ -1,23 +1,20 @@
-package com.ryantablada.controllers;
+package com.theironyard.controllers;
 
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-import com.ryantablada.entities.HasId;
-import com.ryantablada.entities.Post;
-import com.ryantablada.parsers.RootParser;
-import com.ryantablada.repositories.PostRepository;
-import com.ryantablada.serializers.PostSerializer;
-import com.ryantablada.serializers.RootSerializer;
+import com.theironyard.entities.Post;
+import com.theironyard.parsers.RootParser;
+import com.theironyard.repositories.PostRepository;
+import com.theironyard.serializers.PostSerializer;
+import com.theironyard.serializers.RootSerializer;
 
 import javax.servlet.http.HttpServletResponse;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class PostController {
 
@@ -44,11 +41,13 @@ public class PostController {
 
     return rootSerializer.serializeOne("/posts/" + id, post, postSerializer);
   }
+
   @RequestMapping(path = "/posts", method = RequestMethod.POST)
   public Map<String, Object> createPost(@RequestBody RootParser<Post> parser, HttpServletResponse response) {
     Post post = parser.getData().getEntity();
 
-   post.setUser("abc123;aksdhv;oauhdv;ah001");    //post.setUser(parser.getData().getId());
+//   post.setUser(parser.getData().getRelationId());
+    post.setUser("abc123;aksdhv;oauhdv;ah001");
 
     try {
       posts.save(post);

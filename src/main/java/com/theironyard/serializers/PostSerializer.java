@@ -1,10 +1,10 @@
-package com.ryantablada.serializers;
+package com.theironyard.serializers;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ryantablada.entities.HasId;
-import com.ryantablada.entities.Post;
+import com.theironyard.entities.HasId;
+import com.theironyard.entities.Post;
 
 public class PostSerializer extends JsonDataSerializer {
   

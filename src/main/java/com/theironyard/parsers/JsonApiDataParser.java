@@ -1,4 +1,4 @@
-package com.ryantablada.parsers;
+package com.theironyard.parsers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

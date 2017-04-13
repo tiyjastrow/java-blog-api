@@ -1,10 +1,10 @@
-package com.ryantablada.serializers;
+package com.theironyard.serializers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.ryantablada.entities.HasId;
+import com.theironyard.entities.HasId;
 
 public class RootSerializer {
 
